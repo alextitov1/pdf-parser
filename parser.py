@@ -1,13 +1,23 @@
 #!/usr/bin/env python3
 import camelot
 import sys
+from decimal import Decimal
+from re import sub
+
 
 
 def floatTryParse(value):
     try:
-        return float(value)
+        return float(sub(r'[,]', '', value))
     except ValueError:
         return 0
+
+def MoneyTryParse(value):
+    try:
+        return Decimal(value)
+    except:
+        return 0
+
 
 
 #patern = "sushi"
@@ -16,7 +26,7 @@ file   = sys.argv[1]
 print(f'looking for {sys.argv[2].lower()} in the file {file}')
 
 tables = camelot.read_pdf(file, pages = 'all' ,flavor='stream', columns = ['46, 90, 370, 400, 500'])
-# mydf = tables[0].df
+# mydf = tables[0].d
 
 for table in tables:
     for i in range(len(table.df)):
